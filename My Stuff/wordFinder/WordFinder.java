@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * <p>
@@ -101,7 +102,7 @@ public class WordFinder extends JFrame implements ActionListener {
       wordPane.search(txtFldWord.getText());
     }
     else if (e.getSource() == btnLoad) {
-      File source = selectFile(new File(""));
+      File source = selectFile(new File(System.getProperty("user.dir")));
       try {
         loadText(getText(source), txtFldRegex.getText());
       }
@@ -129,7 +130,7 @@ public class WordFinder extends JFrame implements ActionListener {
     final static int BLOCK_WIDTH  = 25;
     final static int BLOCK_HEIGHT = 25;
 
-    int rows, cols;
+    final int rows, cols;
 
     public WordPane(int rows, int cols) {
       // Set frame properties
@@ -321,6 +322,7 @@ public class WordFinder extends JFrame implements ActionListener {
   private File selectFile(File path) {
     JFileChooser chooser = new JFileChooser(path);
     chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    chooser.setFileFilter(new FileNameExtensionFilter("Text File (.txt)", "txt"));
     chooser.showOpenDialog(this);
     return chooser.getSelectedFile();
   }
